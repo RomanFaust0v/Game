@@ -3,7 +3,8 @@ GRAVITY = 1
 
 
 class PLayer:
-    def __init__(self):
+    def __init__(self, tiles):
+        self.tiles = tiles
         self.x = 300
         self.y = 400
         self.image = pygame.image.load('Data/Pictures/Player.png')
@@ -44,7 +45,13 @@ class PLayer:
             dx = -self.rect.left
         if self.rect.right + dx > 800:
             dx = 800 - self.rect.right
-        if self.rect.bottom + dy > 600:
+
+        for tile in self.tiles:
+            if tile.rect.colliderect(self.rect):
+                self.vel_y = -1
+        if key[pygame.K_SPACE]:
             self.vel_y = -20
+
         self.rect.x += dx
         self.rect.y += dy
+
